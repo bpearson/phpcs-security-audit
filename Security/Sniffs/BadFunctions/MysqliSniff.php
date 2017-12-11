@@ -1,7 +1,7 @@
 <?php
 
 
-class Security_Sniffs_BadFunctions_MysqliSniff implements PHP_CodeSniffer_Sniff {
+class Security_Sniffs_BadFunctions_MysqliSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
 
 	/**
 	* Returns the token types that this sniff is interested in.
@@ -15,13 +15,13 @@ class Security_Sniffs_BadFunctions_MysqliSniff implements PHP_CodeSniffer_Sniff 
 	/**
 	* Processes the tokens that this sniff is interested in.
 	*
-	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
+	* @param \PHP_CodeSniffer\Files\File $phpcsFile The file where the token was found.
 	* @param int                  $stackPtr  The position in the stack where
 	*                                        the token was found.
 	*
 	* @return void
 	*/
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(\PHP_CodeSniffer\Files\File $phpcsFile, $stackPtr) {
 		$utils = Security_Sniffs_UtilsFactory::getInstance();
 		$tokens = $phpcsFile->getTokens();
 
@@ -62,7 +62,7 @@ class Security_Sniffs_BadFunctions_MysqliSniff implements PHP_CodeSniffer_Sniff 
 		} elseif ($tokens[$stackPtr]['code'] == T_STRING && in_array($tokens[$stackPtr]['content'],array_map(function($v) { return 'mysqli_' . $v; }, $mysqlifunctions))) {
 			// The first parameter is always the link
 			$p2 = $utils::get_param_tokens($phpcsFile, $stackPtr, 2);
-			$s = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$bracketTokens, Security_Sniffs_Utils::$staticTokens, array(T_STRING_CONCAT)), $p2[0]['stackPtr'], end($p2)['stackPtr']+1, true);
+			$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens, Security_Sniffs_Utils::$staticTokens, array(T_STRING_CONCAT)), $p2[0]['stackPtr'], end($p2)['stackPtr']+1, true);
 			if ($s) {
 				$msg = 'MYSQLi function ' . $tokens[$stackPtr]['content'] . '() detected with dynamic parameter ';
 				if ($utils::is_token_user_input($tokens[$s])) {

@@ -1,7 +1,7 @@
 <?php
 
 
-class Security_Sniffs_BadFunctions_CallbackFunctionsSniff implements PHP_CodeSniffer_Sniff {
+class Security_Sniffs_BadFunctions_CallbackFunctionsSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
 
 	/**
 	* Returns the token types that this sniff is interested in.
@@ -15,13 +15,13 @@ class Security_Sniffs_BadFunctions_CallbackFunctionsSniff implements PHP_CodeSni
 	/**
 	* Processes the tokens that this sniff is interested in.
 	*
-	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
+	* @param \PHP_CodeSniffer\Files\File $phpcsFile The file where the token was found.
 	* @param int                  $stackPtr  The position in the stack where
 	*                                        the token was found.
 	*
 	* @return void
 	*/
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(\PHP_CodeSniffer\Files\File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 		$utils = Security_Sniffs_UtilsFactory::getInstance();
 
@@ -36,7 +36,7 @@ class Security_Sniffs_BadFunctions_CallbackFunctionsSniff implements PHP_CodeSni
 					return;
 				}
 			}
-			$s = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$bracketTokens,
+			$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens,
 										Security_Sniffs_Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
 			$msg = 'Function ' . $tokens[$stackPtr]['content'] . '() that supports callback detected';
              if ($s) {

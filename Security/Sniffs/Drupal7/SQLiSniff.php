@@ -1,7 +1,7 @@
 <?php
 
 
-class Security_Sniffs_Drupal7_SQLiSniff implements PHP_CodeSniffer_Sniff {
+class Security_Sniffs_Drupal7_SQLiSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
 
 	/**
 	* Returns the token types that this sniff is interested in.
@@ -15,13 +15,13 @@ class Security_Sniffs_Drupal7_SQLiSniff implements PHP_CodeSniffer_Sniff {
 	/**
 	* Processes the tokens that this sniff is interested in.
 	*
-	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
+	* @param \PHP_CodeSniffer\Files\File $phpcsFile The file where the token was found.
 	* @param int                  $stackPtr  The position in the stack where
 	*                                        the token was found.
 	*
 	* @return void
 	*/
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(\PHP_CodeSniffer\Files\File $phpcsFile, $stackPtr) {
 		$utils = new Security_Sniffs_Drupal7_Utils();
 
 		$tokens = $phpcsFile->getTokens();
@@ -41,7 +41,7 @@ class Security_Sniffs_Drupal7_SQLiSniff implements PHP_CodeSniffer_Sniff {
 			$warn = FALSE;
 
 			while ($s < $closer) {
-				$s = $phpcsFile->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $s + 1, $closer, true);
+				$s = $phpcsFile->findNext(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, $s + 1, $closer, true);
 				if (!$s) {
 					break;
 				}

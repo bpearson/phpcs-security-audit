@@ -1,7 +1,7 @@
 <?php
 
 
-class Security_Sniffs_BadFunctions_FringeFunctionsSniff implements PHP_CodeSniffer_Sniff {
+class Security_Sniffs_BadFunctions_FringeFunctionsSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
 
 	/**
 	* Returns the token types that this sniff is interested in.
@@ -15,13 +15,13 @@ class Security_Sniffs_BadFunctions_FringeFunctionsSniff implements PHP_CodeSniff
 	/**
 	* Processes the tokens that this sniff is interested in.
 	*
-	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
+	* @param \PHP_CodeSniffer\Files\File $phpcsFile The file where the token was found.
 	* @param int                  $stackPtr  The position in the stack where
 	*                                        the token was found.
 	*
 	* @return void
 	*/
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(\PHP_CodeSniffer\Files\File $phpcsFile, $stackPtr) {
 		$tokens = $phpcsFile->getTokens();
 		$utils = Security_Sniffs_UtilsFactory::getInstance();
 
@@ -29,7 +29,7 @@ class Security_Sniffs_BadFunctions_FringeFunctionsSniff implements PHP_CodeSniff
             $opener = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr, null, false, null, true);
 			$closer = $tokens[$opener]['parenthesis_closer'];
             $s = $stackPtr + 1;
-			$s = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$bracketTokens, Security_Sniffs_Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
+			$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens, Security_Sniffs_Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
 			$msg = 'Unusual function ' . $tokens[$stackPtr]['content'] . '() detected';
              if ($s) {
 				if ($utils::is_token_user_input($tokens[$s])) {

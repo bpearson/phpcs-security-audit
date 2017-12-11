@@ -268,7 +268,7 @@ class Security_Sniffs_Utils {
 	/**
 	* Returns the tokens contained in the function paramters such as f(param1token1 . param1token3, param2token1)
 	*
-    * @param PHP_CodeSniffer_File $phpcsFile	The working instance of PHP_CodeSniffer
+    * @param \PHP_CodeSniffer\Files\File $phpcsFile	The working instance of PHP_CodeSniffer
 	* @param int $stackPtr	The $stackPtr from PHP_CodeSniffer where the function is
 	* @param int $num	The parameter number desired (starts with 1)
 	* @return Array()	An array containing tokens from the requested param
@@ -329,7 +329,7 @@ class Security_Sniffs_Utils {
 	/**
 	* Returns a dirty param found in the parameter of a function call
 	*
-    * @param PHP_CodeSniffer_File $phpcsFile	The working instance of PHP_CodeSniffer
+    * @param \PHP_CodeSniffer\Files\File $phpcsFile	The working instance of PHP_CodeSniffer
 	* @param int $stackPtr	The $stackPtr from PHP_CodeSniffer where the function is.
 	*
 	* @return int The stackPtr of the param found, false if nothing is found
@@ -339,7 +339,7 @@ class Security_Sniffs_Utils {
 		$opener = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr, null, false, null, true);
 		$closer = $tokens[$opener]['parenthesis_closer'];
 		$s = $opener + 1;
-		$s = $phpcsFile->findNext(array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, PHP_CodeSniffer_Tokens::$bracketTokens, Security_Sniffs_Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
+		$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens, Security_Sniffs_Utils::$staticTokens, array(T_STRING_CONCAT)), $s, $closer, true);
 		return $s;
 	}
 

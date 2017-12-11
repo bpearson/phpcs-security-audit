@@ -1,7 +1,7 @@
 <?php
 
 
-class Security_Sniffs_Drupal7_HttpRequestSniff implements PHP_CodeSniffer_Sniff {
+class Security_Sniffs_Drupal7_HttpRequestSniff implements \PHP_CodeSniffer\Sniffs\Sniff {
 
 	/**
 	* Returns the token types that this sniff is interested in.
@@ -15,13 +15,13 @@ class Security_Sniffs_Drupal7_HttpRequestSniff implements PHP_CodeSniffer_Sniff 
 	/**
 	* Processes the tokens that this sniff is interested in.
 	*
-	* @param PHP_CodeSniffer_File $phpcsFile The file where the token was found.
+	* @param \PHP_CodeSniffer\Files\File $phpcsFile The file where the token was found.
 	* @param int                  $stackPtr  The position in the stack where
 	*                                        the token was found.
 	*
 	* @return void
 	*/
-	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr) {
+	public function process(\PHP_CodeSniffer\Files\File $phpcsFile, $stackPtr) {
 		$utils = new Security_Sniffs_Drupal7_Utils();
 
 		$tokens = $phpcsFile->getTokens();
@@ -42,7 +42,7 @@ class Security_Sniffs_Drupal7_HttpRequestSniff implements PHP_CodeSniffer_Sniff 
 			$d = $utils::findDirtyParam($phpcsFile, $stackPtr);
 			if ($d && $utils::is_token_user_input($tokens[$d])) {
 				$phpcsFile->addError('drupal_http_request called with direct user input ' . $tokens[$d]['content'], $stackPtr, 'D7HttpRequestUserInputErr');
-			} elseif ($d && PHP_CodeSniffer::getConfigData('ParanoiaMode')) {
+			} elseif ($d && $phpcsFile->config->ParanoiaMode) {
 				$phpcsFile->addWarning('drupal_http_request called with variable ' . $tokens[$d]['content'], $stackPtr, 'D7HttpRequestUserInputErr');
 			}
 
