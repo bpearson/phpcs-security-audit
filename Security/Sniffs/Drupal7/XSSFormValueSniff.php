@@ -36,7 +36,7 @@ class Security_Sniffs_Drupal7_XSSFormValueSniff implements \PHP_CodeSniffer\Snif
 				$phpcsFile->addWarning('Potential XSS found with #value on ' . $tokens[$next]['content'], $next, 'D7XSSWarFormValue');
 			} elseif ($next && $utils::is_token_user_input($tokens[$next])) {
 				$phpcsFile->addError('XSS found with #value on ' . $tokens[$next]['content'], $next, 'D7XSSErrFormValue');
-			} elseif ($next && $phpcsFile->config->ParanoiaMode) {
+			} elseif ($next && \PHP_CodeSniffer\Config::getConfigData('ParanoiaMode')) {
 				if (in_array($tokens[$next]['content'], $utils::getXSSMitigationFunctions())) {
 					$n = $phpcsFile->findNext($utils::getVariableTokens(), $next + 1, $closer);
 					if ($n) {

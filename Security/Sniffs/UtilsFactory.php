@@ -3,7 +3,7 @@
 class Security_Sniffs_UtilsFactory {
 
 	public static function getInstance() {
-		$cmsframework = null;
+		$cmsframework = \PHP_CodeSniffer\Config::getConfigData('CmsFramework');
 		if (isset($cmsframework)) {
 			$utilsclass = 'Security_Sniffs_'.$cmsframework.'_Utils';
 			if (class_exists($utilsclass)) {

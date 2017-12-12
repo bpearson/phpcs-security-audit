@@ -27,12 +27,12 @@ class Security_Sniffs_Drupal7_XSSPThemeSniff implements \PHP_CodeSniffer\Sniffs\
 
 		if ($tokens[$stackPtr]['content'] == "'#theme'" || $tokens[$stackPtr]['content'] == '"#theme"') {
 			$next = $phpcsFile->findNext(\PHP_CodeSniffer\Util\Tokens::$stringTokens, $stackPtr + 1);
-			if($phpcsFile->config->ParanoiaMode && $tokens[$next]['content'] == "'html_tag'") {
+			if(\PHP_CodeSniffer\Config::getConfigData('ParanoiaMode') && $tokens[$next]['content'] == "'html_tag'") {
 				$phpcsFile->addWarning('Potential XSS found with #theme and html_tag', $stackPtr, 'D7XSSWarhtmltag');
 			} else {
 				$next = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$bracketTokens, \PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$assignmentTokens),
 								$stackPtr + 1, null, true);
-				if ($next && $phpcsFile->config->ParanoiaMode && $tokens[$next]['code'] != T_CONSTANT_ENCAPSED_STRING) {
+				if ($next && \PHP_CodeSniffer\Config::getConfigData('ParanoiaMode') && $tokens[$next]['code'] != T_CONSTANT_ENCAPSED_STRING) {
 					$phpcsFile->addWarning('Potential XSS found with #theme on ' . $tokens[$next]['content'], $stackPtr, 'D7XSSWarTheme');
 				}
 			}

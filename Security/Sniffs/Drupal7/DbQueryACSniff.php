@@ -36,7 +36,7 @@ class Security_Sniffs_Drupal7_DbQueryACSniff implements \PHP_CodeSniffer\Sniffs\
 		if ($this->forceParanoia >= 0) {
 			$parano =  $this->forceParanoia ? 1 : 0;
 		} else {
-			$parano = $phpcsFile->config->ParanoiaMode ? 1 : 0;
+			$parano = \PHP_CodeSniffer\Config::getConfigData('ParanoiaMode') ? 1 : 0;
 		}
 
 		$tokens = $phpcsFile->getTokens();

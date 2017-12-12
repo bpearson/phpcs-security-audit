@@ -91,7 +91,7 @@ class Security_Sniffs_Drupal7_DynQueriesSniff implements \PHP_CodeSniffer\Sniffs
 				}
 			}
 
-			if ($warn && $phpcsFile->config->ParanoiaMode) {
+			if ($warn && \PHP_CodeSniffer\Config::getConfigData('ParanoiaMode')) {
 				$phpcsFile->addWarning('Potential SQL injection in ' . $tokens[$stackPtr]['content'] . " with param #$paramnum", $stackPtr, 'D7DynQueriesWarn');
 			}
 		}

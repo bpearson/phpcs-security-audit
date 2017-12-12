@@ -33,7 +33,7 @@ class Security_Sniffs_BadFunctions_EasyXSSSniff implements \PHP_CodeSniffer\Snif
 		if ($this->forceParanoia >= 0) {
 			$parano =  $this->forceParanoia ? 1 : 0;
 		} else {
-			$parano = $phpcsFile->config->ParanoiaMode ? 1 : 0;
+			$parano = \PHP_CodeSniffer\Config::getConfigData('ParanoiaMode') ? 1 : 0;
 		}
 		$tokens = $phpcsFile->getTokens();
 		$s = $phpcsFile->findNext(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, $stackPtr, null, true, null, true);

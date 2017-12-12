@@ -40,7 +40,7 @@ class Security_Sniffs_Drupal7_UserInputWatchSniff implements \PHP_CodeSniffer\Sn
 	* @return void
 	*/
 	public function process(\PHP_CodeSniffer\Files\File $phpcsFile, $stackPtr) {
-		if (!$phpcsFile->config->ParanoiaMode) return;
+		if (!\PHP_CodeSniffer\Config::getConfigData('ParanoiaMode')) return;
 
 		$utils = new Security_Sniffs_Drupal7_Utils();
 		$tokens = $phpcsFile->getTokens();

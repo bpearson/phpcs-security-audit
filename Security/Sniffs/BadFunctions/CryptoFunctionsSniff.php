@@ -22,7 +22,7 @@ class Security_Sniffs_BadFunctions_CryptoFunctionsSniff implements \PHP_CodeSnif
 	*/
 	public function process(\PHP_CodeSniffer\Files\File $phpcsFile, $stackPtr) {
 		// Run this sniff only in paranoia mode
-		if (!$phpcsFile->config->ParanoiaMode) {
+		if (!\PHP_CodeSniffer\Config::getConfigData('ParanoiaMode')) {
 			return;
 		}
 		$utils = Security_Sniffs_UtilsFactory::getInstance();

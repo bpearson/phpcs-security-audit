@@ -32,7 +32,7 @@ class Security_Sniffs_BadFunctions_FilesystemFunctionsSniff implements \PHP_Code
 			$opener = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr, null, false, null, true);
 			if (!$opener) {
 				// No opener found, so it's probably not a function call
-				if ($phpcsFile->config->ParanoiaMode) {
+				if (\PHP_CodeSniffer\Config::getConfigData('ParanoiaMode')) {
 					$phpcsFile->addWarning('Filesystem function ' . $tokens[$stackPtr]['content'] . ' used but not as a function', $stackPtr, 'WarnWeirdFilesystem');
 				}
 				return;

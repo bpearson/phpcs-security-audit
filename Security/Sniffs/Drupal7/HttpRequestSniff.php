@@ -42,7 +42,7 @@ class Security_Sniffs_Drupal7_HttpRequestSniff implements \PHP_CodeSniffer\Sniff
 			$d = $utils::findDirtyParam($phpcsFile, $stackPtr);
 			if ($d && $utils::is_token_user_input($tokens[$d])) {
 				$phpcsFile->addError('drupal_http_request called with direct user input ' . $tokens[$d]['content'], $stackPtr, 'D7HttpRequestUserInputErr');
-			} elseif ($d && $phpcsFile->config->ParanoiaMode) {
+			} elseif ($d && \PHP_CodeSniffer\Config::getConfigData('ParanoiaMode')) {
 				$phpcsFile->addWarning('drupal_http_request called with variable ' . $tokens[$d]['content'], $stackPtr, 'D7HttpRequestUserInputErr');
 			}
 

@@ -35,10 +35,10 @@ class Security_Sniffs_BadFunctions_EasyRFISniff implements \PHP_CodeSniffer\Snif
 		while ($s) {
 			$s = $phpcsFile->findNext(array_merge(\PHP_CodeSniffer\Util\Tokens::$emptyTokens, \PHP_CodeSniffer\Util\Tokens::$bracketTokens, Security_Sniffs_Utils::$staticTokens), $s + 1, $closer, true);
 			if ($s && $utils::is_token_user_input($tokens[$s])) {
-				if ($phpcsFile->config->ParanoiaMode || !$utils::is_token_false_positive($tokens[$s], $tokens[$s+2])) {
+				if (\PHP_CodeSniffer\Config::getConfigData('ParanoiaMode') || !$utils::is_token_false_positive($tokens[$s], $tokens[$s+2])) {
 					$phpcsFile->addError('Easy RFI detected because of direct user input with ' . $tokens[$s]['content'] . ' on ' . $tokens[$stackPtr]['content'], $s, 'ErrEasyRFI');
 				}
-			} elseif ($s && $phpcsFile->config->ParanoiaMode && $tokens[$s]['content'] != '.') {
+			} elseif ($s && \PHP_CodeSniffer\Config::getConfigData('ParanoiaMode') && $tokens[$s]['content'] != '.') {
 				$phpcsFile->addWarning('Possible RFI detected with ' . $tokens[$s]['content'] . ' on ' . $tokens[$stackPtr]['content'], $s, 'WarnEasyRFI');
 			}
 		}

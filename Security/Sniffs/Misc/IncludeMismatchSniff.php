@@ -25,7 +25,7 @@ class Security_Sniffs_Misc_IncludeMismatchSniff implements \PHP_CodeSniffer\Snif
 		$s = $phpcsFile->findNext(\PHP_CodeSniffer\Util\Tokens::$stringTokens, $stackPtr + 1);
 		if (preg_match('/\.(\w+)(?:\'|\")$/', $tokens[$s]['content'], $matches)) {
 			$ext = $matches[1];
-			if (!array_key_exists($ext, $phpcsFile->phpcs->allowedFileExtensions)) {
+			if (!array_key_exists($ext, $phpcsFile->config->extensions)) {
 				$phpcsFile->addError("The file extension '.$ext' that is not specified by --extensions has been used in a include/require function. Please add it to the scan process.", $stackPtr, 'ErrMiscIncludeMismatch');
 			}
 		} else {

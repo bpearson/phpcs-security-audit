@@ -48,7 +48,7 @@ class Security_Sniffs_Drupal7_CacheiSniff implements \PHP_CodeSniffer\Sniffs\Sni
 				}
 				if ($utils::is_token_user_input($tokens[$s])) {
 					$phpcsFile->addError("Potential cache injection found in $content()", $s, 'D7Cachei');
-				} elseif ($phpcsFile->config->ParanoiaMode && in_array($tokens[$s]['code'], $utils::getVariableTokens())) {
+				} elseif (\PHP_CodeSniffer\Config::getConfigData('ParanoiaMode') && in_array($tokens[$s]['code'], $utils::getVariableTokens())) {
 					$phpcsFile->addWarning("Direct variable usage in $content()", $s, 'D7CacheDirectVar');
 				}
 			}

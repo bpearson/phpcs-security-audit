@@ -36,7 +36,7 @@ class Security_Sniffs_Drupal7_XSSHTMLConstructSniff implements \PHP_CodeSniffer\
 				if ($next && !in_array($tokens[$next]['content'], $utils::getXSSMitigationFunctions())) {
 					if ($utils::is_direct_user_input($tokens[$next]['content'])) {
 						$phpcsFile->addError('HTML construction with direct user input '.$tokens[$next]['content'].' detected.', $stackPtr, 'D7XSSHTMLConstructErr');
-					} elseif ($phpcsFile->config->ParanoiaMode && !in_array($tokens[$next]['code'], array_merge(array(T_INLINE_ELSE, T_COMMA), \PHP_CodeSniffer\Util\Tokens::$booleanOperators))) {
+					} elseif (\PHP_CodeSniffer\Config::getConfigData('ParanoiaMode') && !in_array($tokens[$next]['code'], array_merge(array(T_INLINE_ELSE, T_COMMA), \PHP_CodeSniffer\Util\Tokens::$booleanOperators))) {
 						if ($tokens[$next]['code'] == T_CLOSE_PARENTHESIS) {
 							$f = $phpcsFile->findPrevious(T_STRING, $next);
 							if ($f) {
